@@ -5,4 +5,13 @@
   color: red;
   cursor: pointer;
   margin: 2rem;
+  transition: opacity .3s ease;
+
+  &:focus {
+    outline: 0;
+  }
+
+  &:hover {
+    opacity: .6;
+  }
 }

@@ -72,17 +72,28 @@ const App = ({title}) => {
     startTimer();
   };
 
+  // Play/Pause action
+  let control;
+  if (!options.timerRunning) {
+    control = (
+      <Button handleClick={startTimer}>
+        <GrPlay />
+      </Button>
+    );
+  } else {
+    control = (
+      <Button handleClick={pauseTimer}>
+        <GrPause />
+      </Button>
+    );
+  }
+
   return (
     <div className='app'>
       <h1 className='app__title'>{title}</h1>
       <Timer time={currentTime} />
       <div className='actions'>
-        <Button handleClick={startTimer}>
-          <GrPlay />
-        </Button>
-        <Button handleClick={pauseTimer}>
-          <GrPause />
-        </Button>
+        {control}
         <Button handleClick={handleReset}>
           <GrPowerCycle />
         </Button>

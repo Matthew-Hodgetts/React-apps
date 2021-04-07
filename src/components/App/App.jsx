@@ -1,15 +1,15 @@
-import React, { useState, useEffect } from "react";
-import "./App.scss";
-import PropTypes from "prop-types";
+import React, {useState, useEffect} from 'react';
+import './App.scss';
+import PropTypes from 'prop-types';
 
 // Import Components
-import Timer from "../Timer/Timer";
-import Button from "../Button/Button";
+import Timer from '../Timer/Timer';
+import Button from '../Button/Button';
 
 // Import button icons
-import { GrPlay, GrPowerCycle, GrPause } from "react-icons/gr";
+import {GrPlay, GrPowerCycle, GrPause} from 'react-icons/gr';
 
-const App = ({ title }) => {
+const App = ({title}) => {
   // eslint-disable-next-line
   const [options, setOptions] = useState({
     timerRunning: false,
@@ -36,7 +36,7 @@ const App = ({ title }) => {
     // If the time or session has ended
     if (currentTime < 1) {
       // Reverse the session
-      const newOptions = { ...options, session: !options.session };
+      const newOptions = {...options, session: !options.session};
       setOptions(newOptions);
     }
   }, [currentTime]);
@@ -52,29 +52,38 @@ const App = ({ title }) => {
   }, [options.session]);
 
   const startTimer = () => {
-    const newOptions = { ...options, timerRunning: true };
+    const newOptions = {...options, timerRunning: true};
     setOptions(newOptions);
   };
 
   const pauseTimer = () => {
-    const newOptions = { ...options, timerRunning: false };
+    const newOptions = {...options, timerRunning: false};
     setOptions(newOptions);
   };
 
+  const handleReset = () => {
+    console.log('RESET');
+    // Set the current session's time back to full
+    options.session
+      ? setCurrentTime(options.studyTime)
+      : setCurrentTime(options.breakTime);
+
+    // Start the timer
+    startTimer();
+  };
+
   return (
-    <div className="app">
-      <h1 className="app__title">
-        {title} {options.session ? "STUDY" : "BREAK"}
-      </h1>
+    <div className='app'>
+      <h1 className='app__title'>{title}</h1>
       <Timer time={currentTime} />
-      <div className="actions">
+      <div className='actions'>
         <Button handleClick={startTimer}>
           <GrPlay />
         </Button>
         <Button handleClick={pauseTimer}>
           <GrPause />
         </Button>
-        <Button>
+        <Button handleClick={handleReset}>
           <GrPowerCycle />
         </Button>
       </div>
@@ -85,7 +94,7 @@ const App = ({ title }) => {
 export default App;
 
 App.defaultProps = {
-  title: "Pomodoro timer",
+  title: 'Pomodoro timer',
 };
 
 App.propTypes = {

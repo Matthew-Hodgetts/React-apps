@@ -5,12 +5,12 @@ import PropTypes from 'prop-types';
 // Import Components
 import Timer from '../Timer/Timer';
 import Button from '../Button/Button';
+import Options from '../Options/Options';
 
 // Import button icons
 import {GrPlay, GrPowerCycle, GrPause} from 'react-icons/gr';
 
 const App = ({title}) => {
-  // eslint-disable-next-line
   const [options, setOptions] = useState({
     timerRunning: false,
     // Session property
@@ -67,9 +67,28 @@ const App = ({title}) => {
     options.session
       ? setCurrentTime(options.studyTime)
       : setCurrentTime(options.breakTime);
+    pauseTimer();
+  };
 
-    // Start the timer
-    startTimer();
+  const changeSetting = (type, incDec) => {
+    console.log(type, incDec);
+
+    // If the clock isnt currently running
+    // user cannot change duration whilst its running
+    // this can be changed later if desired
+    if (!options.timerRunning) {
+      // Change Study time here
+      if (type === 'study') {
+        incDec
+          ? setOptions({...options, studyTime: options.studyTime + 60})
+          : setOptions({...options, studyTime: options.studyTime - 60});
+      } else {
+        // Change break time here
+        incDec
+          ? setOptions({...options, breakTime: options.breakTime + 60})
+          : setOptions({...options, breakTime: options.breakTime - 60});
+      }
+    }
   };
 
   // Play/Pause action
@@ -98,6 +117,11 @@ const App = ({title}) => {
           <GrPowerCycle />
         </Button>
       </div>
+      <Options
+        handleChange={changeSetting}
+        studyTime={options.studyTime}
+        breakTime={options.breakTime}
+      />
     </div>
   );
 };

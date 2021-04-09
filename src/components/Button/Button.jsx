@@ -1,11 +1,11 @@
-import React from "react";
-import "./Button.scss";
+import React from 'react';
+import './Button.scss';
 
-import PropTypes from "prop-types";
+import PropTypes from 'prop-types';
 
-const Button = ({ children, handleClick }) => {
+const Button = ({children, handleClick}) => {
   return (
-    <button className="button" onClick={handleClick}>
+    <button className='button' onClick={handleClick}>
       {children}
     </button>
   );
